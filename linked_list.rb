@@ -60,7 +60,7 @@ class LinkedList
     if tmp.nil?
       puts "Index not present at this linked list!"
     else
-      puts "Value at #{i} is #{tmp.value}"
+      puts "Value at index (#{i}) is #{tmp.value}"
     end
   end
 
@@ -81,6 +81,47 @@ class LinkedList
     cur.next_node = nil
     @tail_node = cur
   end
+
+  def contains?(value)
+    return false if @head_node.nil?
+
+    tmp = @head_node
+    until tmp.nil?
+      return true if tmp.value == value
+      tmp = tmp.next_node
+    end
+    return false
+  end
+
+  def find(value)
+    return false if @head_node.nil?
+
+    tmp = @head_node
+    idx = 0
+    until tmp.nil?
+      return idx if tmp.value == value
+      idx += 1
+      tmp = tmp.next_node
+    end
+    return nil
+  end
+
+  def to_s
+    return "" if @head_node.nil?
+
+    tmp = @head_node
+    str = ""
+    until tmp.nil?
+      str << "#{tmp.value} -> "
+      tmp = tmp.next_node
+    end
+    str << "nil"
+    puts str
+  end
+
+  # def insert_at(value, index)
+  #   tmp = @head_node
+  # end
 end
 
 class Node
@@ -95,11 +136,11 @@ list = LinkedList.new
 list.append(3)
 list.append(2)
 list.prepend(5)
-puts list.head_node.value, list.head_node.next_node.value, list.head_node.next_node.next_node.value
-list.pop
-list.pop
-list.pop
+list.append(4)
 list.size
 list.head
 list.tail
-list.at(2)
+list.at(1)
+puts list.contains?(3)
+puts list.find(7)
+list.to_s
