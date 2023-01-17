@@ -119,9 +119,49 @@ class LinkedList
     puts str
   end
 
-  # def insert_at(value, index)
-  #   tmp = @head_node
-  # end
+  def insert_at(value, index)
+    if index == 0
+      self.prepend(value)
+      return
+    end
+    cur = @head_node
+    tmp = @head_node.next_node
+    idx = 1
+    until cur.nil?
+      if idx == index
+        cur.next_node = Node.new(value, tmp)
+        @tail_node = cur.next_node if tmp.nil?
+        return
+      end
+      break if tmp.nil?
+      cur = tmp
+      tmp = tmp.next_node
+      idx += 1
+    end
+    puts "Index greater than last index on this list"
+  end
+
+  def remove_at(index)
+    if index == 0
+      @head_node = @head_node.next_node
+      return
+    end
+    cur = @head_node
+    tmp = @head_node.next_node
+    idx = 1
+    until cur.nil?
+      if idx == index && !tmp.nil?
+        cur.next_node = tmp.next_node
+        @tail_node = cur if tmp.next_node.nil?
+        return
+      end
+      break if tmp.nil?
+      cur = tmp
+      tmp = tmp.next_node
+      idx += 1
+    end
+    puts "Index greater than last index on this list"
+  end
 end
 
 class Node
@@ -143,4 +183,11 @@ list.tail
 list.at(1)
 puts list.contains?(3)
 puts list.find(7)
+list.pop
+list.pop
+list.pop
+list.size
+list.insert_at(7, 1)
+list.remove_at(0)
+list.tail
 list.to_s
